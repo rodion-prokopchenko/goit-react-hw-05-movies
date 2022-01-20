@@ -20,7 +20,7 @@ function fetchSearching(searching) {
       if (responce.results.length === 0) {
         return Promise.reject(new Error("Nothing was founded"));
       }
-      return responce.results;
+      return responce;
     });
 }
 

@@ -26,9 +26,9 @@ const HomeView = () => {
               <Link
                 to={{
                   pathname: `movies/${movie.id}`,
-                  state: {
-                    from: location?.state?.from ?? "/",
-                  },
+                }}
+                state={{
+                  from: location?.state?.from ?? "/",
                 }}
               >
                 {movie.title}

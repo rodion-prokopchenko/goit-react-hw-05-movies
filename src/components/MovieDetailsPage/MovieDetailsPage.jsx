@@ -4,22 +4,29 @@ import {
   useLocation,
   useParams,
   Outlet,
+  Link,
   NavLink,
   Route,
+  useMatch,
   Routes,
 } from "react-router-dom";
 import { fetchMovieDetails } from "../AppFetch/AppFetch";
+// import Cast from "../Cast/Cast";
+// import ReviewsList from "../Reviews/Reviews";
 
 const MovieDetailsPage = () => {
-  // const Cast = lazy(() => import("../Cast/Cast"));
-  // const Reviews = lazy(() => import("../Reviews/Reviews"));
+  const Cast = lazy(() => import("../Cast/Cast"));
+  const Reviews = lazy(() => import("../Reviews/Reviews"));
+
   const location = useLocation();
   const navigation = useNavigate();
   const { movieId } = useParams();
 
+  // const { path } = useMatch();
+  console.log(movieId);
+
   const [film, setFilm] = useState([]);
   const [genres, setGenres] = useState([]);
-  // const [navNumber, setNavNumber] = useState(-1);
 
   useEffect(() => {
     fetchMovieDetails(movieId).then((responce) => {
@@ -40,10 +47,12 @@ const MovieDetailsPage = () => {
   //   }
   // }, [location.pathname]);
 
-  console.log(location);
+  setTimeout(() => {
+    console.log(location);
+  }, 1000);
 
   const onGoBack = () => {
-    navigation(location);
+    navigation(location.state.from);
   };
 
   return (
@@ -79,22 +88,41 @@ const MovieDetailsPage = () => {
           <h3>Additional information</h3>
           <ul>
             <li>
-              <NavLink to={`cast`}>Cast</NavLink>
+              <NavLink
+                to={{
+                  pathname: `${location.pathname}/cast`,
+                  state: {
+                    from: location?.state?.from ?? "/",
+                  },
+                }}
+              >
+                Cast
+              </NavLink>
             </li>
             <li>
-              <NavLink to={`reviews`}>Reviews </NavLink>
+              <NavLink
+                to={{
+                  pathname: `${location.pathname}/reviews`,
+                  state: {
+                    from: location?.state?.from ?? "/",
+                  },
+                }}
+              >
+                Reviews
+              </NavLink>
             </li>
           </ul>
-          <Outlet />
         </div>
       </section>
-
-      {/* <Suspense fallback={<h2>Загружаю...</h2>}>
+      <Suspense fallback={<h2>Загружаю...</h2>}>
         <Routes>
-          <Route path="/movies/:movieId/cast" element={<Cast />}></Route>
-          <Route path="/movies/:movieId/reviews" element={<Reviews />}></Route>
+          <Route path={`${location.pathname}/cast`} element={<Cast />}></Route>
+          <Route
+            path={"/movies/:movieId/reviews"}
+            element={<Reviews />}
+          ></Route>
         </Routes>
-      </Suspense> */}
+      </Suspense>
     </>
   );
 };

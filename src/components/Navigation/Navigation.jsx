@@ -9,7 +9,6 @@ import {
 } from "react-router-dom";
 
 export default function Navigation() {
-  const { movies } = useParams();
   const location = useLocation();
   const history = useNavigate();
   return (
