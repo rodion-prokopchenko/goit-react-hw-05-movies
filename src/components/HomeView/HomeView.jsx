@@ -1,18 +1,21 @@
 import react, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import { fetchTrending } from "../AppFetch/AppFetch";
 
 const HomeView = () => {
-  const [trendingMovies, setTrendingMovies] = useState(() => {
+  const location = useLocation();
+
+  const [trendingMovies, setTrendingMovies] = useState("");
+
+  useEffect(() => {
     fetchTrending()
       .then((filmArr) => {
         setTrendingMovies(filmArr);
       })
       .catch((error) => console.log(error));
-  });
-
-  console.log(trendingMovies);
+  }, []);
+  console.log(location);
 
   return (
     <>
@@ -20,7 +23,16 @@ const HomeView = () => {
         {trendingMovies &&
           trendingMovies.map((movie) => (
             <li key={movie.id}>
-              <Link to={`movies/${movie.id}`}>{movie.title}</Link>
+              <Link
+                to={{
+                  pathname: `movies/${movie.id}`,
+                  state: {
+                    from: location?.state?.from ?? "/",
+                  },
+                }}
+              >
+                {movie.title}
+              </Link>
             </li>
           ))}
       </ul>

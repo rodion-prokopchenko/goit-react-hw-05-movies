@@ -1,28 +1,57 @@
-import react, { useEffect, useState } from "react";
-import { useLocation, useParams, Outlet, NavLink } from "react-router-dom";
+import react, { useEffect, useState, lazy, Suspense } from "react";
+import {
+  useNavigate,
+  useLocation,
+  useParams,
+  Outlet,
+  NavLink,
+  Route,
+  Routes,
+} from "react-router-dom";
 import { fetchMovieDetails } from "../AppFetch/AppFetch";
 
 const MovieDetailsPage = () => {
-  const params = useParams();
+  // const Cast = lazy(() => import("../Cast/Cast"));
+  // const Reviews = lazy(() => import("../Reviews/Reviews"));
+  const location = useLocation();
+  const navigation = useNavigate();
+  const { movieId } = useParams();
 
   const [film, setFilm] = useState([]);
   const [genres, setGenres] = useState([]);
+  // const [navNumber, setNavNumber] = useState(-1);
 
   useEffect(() => {
-    fetchMovieDetails(params.movieId).then((responce) => {
+    fetchMovieDetails(movieId).then((responce) => {
       console.log(responce);
       setFilm(responce);
       setGenres(responce.genres);
     });
   }, []);
 
+  // useEffect(() => {
+  //   if (location.pathname.includes("cast")) {
+  //     setNavNumber((prevState) => navNumber - 1);
+  //     return;
+  //   }
+  //   if (location.pathname.includes("reviews")) {
+  //     setNavNumber((prevState) => navNumber - 1);
+  //     return;
+  //   }
+  // }, [location.pathname]);
+
+  console.log(location);
+
+  const onGoBack = () => {
+    navigation(location);
+  };
+
   return (
     <>
-      <h2>
-        Тут будет фильм {params.movieId} {film.title} по которому ты клацнул
-      </h2>
       <section>
-        <button type="button">Go back</button>
+        <button type="button" onClick={onGoBack}>
+          Go back
+        </button>
         <h2>{film.original_title}</h2>
         <div>
           <div>
@@ -59,6 +88,13 @@ const MovieDetailsPage = () => {
           <Outlet />
         </div>
       </section>
+
+      {/* <Suspense fallback={<h2>Загружаю...</h2>}>
+        <Routes>
+          <Route path="/movies/:movieId/cast" element={<Cast />}></Route>
+          <Route path="/movies/:movieId/reviews" element={<Reviews />}></Route>
+        </Routes>
+      </Suspense> */}
     </>
   );
 };

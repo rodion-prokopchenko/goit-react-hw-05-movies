@@ -4,23 +4,24 @@ const ApiKey = "api_key=5e8188bd5a93395485b2ded76178b89d";
 const HttpsOfSite = "https://api.themoviedb.org/3";
 
 function fetchTrending() {
-  return (
-    fetch(`${HttpsOfSite}/trending/movie/week?${ApiKey}`)
-      .then((res) => res.json())
-      .then((data) => data.results)
-      // .then((data) => data.map((data) => data.title))
-      .catch((err) => console.log("error:", err))
-  );
+  return fetch(`${HttpsOfSite}/trending/movie/week?${ApiKey}`)
+    .then((res) => res.json())
+    .then((data) => data.results)
+
+    .catch((err) => console.log("error:", err));
 }
-// console.log(data.results)
+
 function fetchSearching(searching) {
   return fetch(
     `${HttpsOfSite}/search/movie?${ApiKey}&language=en-US&query=${searching}&page=1&include_adult=false`
   )
     .then((res) => res.json())
-    .then((data) =>
-      console.log(data).catch((err) => console.log("error:", err))
-    );
+    .then((responce) => {
+      if (responce.results.length === 0) {
+        return Promise.reject(new Error("Nothing was founded"));
+      }
+      return responce.results;
+    });
 }
 
 const fetchMovieDetails = (id) => {
@@ -40,7 +41,7 @@ function fetchMovieCredits(id) {
 function fetchMovieReviews(id) {
   return fetch(`${HttpsOfSite}/movie/${id}/reviews?${ApiKey}&language=en-US`)
     .then((res) => res.json())
-    .then((data) => console.log(data))
+    .then((data) => data.results)
     .catch((err) => console.log("error:", err));
 }
 
