@@ -15,7 +15,6 @@ export default function Movies() {
     }
 
     fetchSearching(e)
-      .then(navigate({ ...location, search: `query=${e}` }))
       .then((data) => {
         console.log(data);
         if (data.length === 0) {
@@ -28,7 +27,7 @@ export default function Movies() {
 
         console.log(films);
       })
-
+      // .then(navigate({ ...location, search: `query=${e}` }))
       .catch((error) => {
         alert(error.message);
       });
