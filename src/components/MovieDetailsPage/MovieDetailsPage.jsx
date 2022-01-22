@@ -56,18 +56,12 @@ const MovieDetailsPage = () => {
           <h3>Additional information</h3>
           <ul>
             <li>
-              <NavLink
-                to={`${location.pathname}/cast`}
-                state={{ from: location.state.from }}
-              >
+              <NavLink to={`cast`} state={{ from: location.state.from }}>
                 Cast
               </NavLink>
             </li>
             <li>
-              <NavLink
-                to={`${location.pathname}/reviews`}
-                state={{ from: location.state.from }}
-              >
+              <NavLink to={`reviews`} state={{ from: location.state.from }}>
                 Reviews
               </NavLink>
             </li>
