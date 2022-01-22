@@ -1,28 +1,11 @@
 import react, { useEffect, useState, lazy, Suspense } from "react";
-import {
-  useNavigate,
-  useLocation,
-  useParams,
-  Outlet,
-  Link,
-  NavLink,
-  Route,
-  useMatch,
-  Routes,
-} from "react-router-dom";
+import { useNavigate, useLocation, useParams, NavLink } from "react-router-dom";
 import { fetchMovieDetails } from "../AppFetch/AppFetch";
-// import Cast from "../Cast/Cast";
-// import ReviewsList from "../Reviews/Reviews";
 
 const MovieDetailsPage = () => {
-  const Cast = lazy(() => import("../Cast/Cast"));
-  const Reviews = lazy(() => import("../Reviews/Reviews"));
-
   const location = useLocation();
   const navigation = useNavigate();
   const { movieId } = useParams();
-
-  // const { path } = useMatch();
   console.log(movieId);
 
   const [film, setFilm] = useState([]);
@@ -35,21 +18,6 @@ const MovieDetailsPage = () => {
       setGenres(responce.genres);
     });
   }, []);
-
-  // useEffect(() => {
-  //   if (location.pathname.includes("cast")) {
-  //     setNavNumber((prevState) => navNumber - 1);
-  //     return;
-  //   }
-  //   if (location.pathname.includes("reviews")) {
-  //     setNavNumber((prevState) => navNumber - 1);
-  //     return;
-  //   }
-  // }, [location.pathname]);
-
-  setTimeout(() => {
-    console.log(location);
-  }, 1000);
 
   const onGoBack = () => {
     navigation(location.state.from);
@@ -89,24 +57,16 @@ const MovieDetailsPage = () => {
           <ul>
             <li>
               <NavLink
-                to={{
-                  pathname: `${location.pathname}/cast`,
-                  state: {
-                    from: location?.state?.from ?? "/",
-                  },
-                }}
+                to={`${location.pathname}/cast`}
+                state={{ from: location.state.from }}
               >
                 Cast
               </NavLink>
             </li>
             <li>
               <NavLink
-                to={{
-                  pathname: `${location.pathname}/reviews`,
-                  state: {
-                    from: location?.state?.from ?? "/",
-                  },
-                }}
+                to={`${location.pathname}/reviews`}
+                state={{ from: location.state.from }}
               >
                 Reviews
               </NavLink>
@@ -114,25 +74,8 @@ const MovieDetailsPage = () => {
           </ul>
         </div>
       </section>
-      <Suspense fallback={<h2>Загружаю...</h2>}>
-        <Routes>
-          <Route path={`${location.pathname}/cast`} element={<Cast />}></Route>
-          <Route
-            path={"/movies/:movieId/reviews"}
-            element={<Reviews />}
-          ></Route>
-        </Routes>
-      </Suspense>
     </>
   );
 };
 
 export default MovieDetailsPage;
-
-// async () => {
-//   fetchMovieDetails(params.movieId)
-//     .then((data) => {
-//       setDetails(data);
-//     })
-//     .catch((error) => console.log(error));
-// };

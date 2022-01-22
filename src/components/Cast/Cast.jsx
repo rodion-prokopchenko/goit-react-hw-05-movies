@@ -4,16 +4,17 @@ import { fetchMovieCredits } from "../AppFetch/AppFetch";
 
 const Cast = () => {
   const [cast, setCast] = useState([]);
-  const param = useParams();
+  const { movieId } = useParams();
 
-  useEffect(async () => {
-    fetchMovieCredits(param.movieId).then((responce) => {
-      setCast(responce.cast);
+  console.log(cast);
+  useEffect(() => {
+    fetchMovieCredits(movieId).then((responce) => {
+      setCast(responce.cast).catch((error) => {
+        console.log(error);
+      });
     });
   }, []);
-  setTimeout(() => {
-    console.log(cast);
-  }, 1000);
+
   return (
     <section>
       <h2>Cast</h2>
