@@ -8,11 +8,13 @@ const Cast = () => {
 
   console.log(cast);
   useEffect(() => {
-    fetchMovieCredits(movieId).then((responce) => {
-      setCast(responce.cast).catch((error) => {
+    fetchMovieCredits(movieId)
+      .then((responce) => {
+        setCast(responce.cast);
+      })
+      .catch((error) => {
         console.log(error);
       });
-    });
   }, []);
 
   return (

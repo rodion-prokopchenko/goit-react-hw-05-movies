@@ -60,7 +60,10 @@ export default function Movies() {
         {films !== "" &&
           films.map((films) => (
             <li key={films.id}>
-              <Link to={`/movies/${films.id}`} state={{ from: location }}>
+              <Link
+                to={`/movies/${films.id}`}
+                state={{ from: location ?? "/" }}
+              >
                 {films.title}
               </Link>
             </li>
@@ -69,29 +72,3 @@ export default function Movies() {
     </section>
   );
 }
-
-// const onButton = (e) => {
-//   e.preventDefault();
-//   if (query.trim() === "") {
-//     alert("Write something");
-//     return;
-//   }
-
-//   fetchSearching(query)
-//     // .then((data) => console.log(data.results))
-//     .then((data) => {
-//       console.log(data.results);
-//       if (data.results.length === 0) {
-//         alert("Пусто");
-//         return;
-//       }
-//       if (data.results.length > 0) {
-//         setFilms(data.results);
-//       }
-//     })
-//     // .then((data) => setFilms(data.results))
-//     .then(navigation({ ...location, search: `query=${query}` }))
-//     .catch((error) => {
-//       alert(error.message);
-//     });
-// };

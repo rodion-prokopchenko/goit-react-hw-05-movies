@@ -48,16 +48,4 @@ export default function App() {
       </Suspense>
     </>
   );
-
-  // <Suspense fallback="">
-  //   <Switch>
-  //     <Route path="/"></Route>
-  //   </Switch>
-  // </Suspense>;
 }
-
-// const trending = fetchTrending();
-// const searching = fetchSearching("superman");
-// const movie = fetchMovieDetails(12);
-// const movieCredits = fetchMovieCredits(12);
-// const movieReviews = fetchMovieReviews(12);

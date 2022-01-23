@@ -20,7 +20,7 @@ const MovieDetailsPage = () => {
   }, []);
 
   const onGoBack = () => {
-    navigation(location.state.from);
+    navigation(location?.state?.from ?? "/");
   };
 
   return (
@@ -56,12 +56,18 @@ const MovieDetailsPage = () => {
           <h3>Additional information</h3>
           <ul>
             <li>
-              <NavLink to={`cast`} state={{ from: location.state.from }}>
+              <NavLink
+                to={`cast`}
+                state={{ from: location?.state?.from ?? "/" }}
+              >
                 Cast
               </NavLink>
             </li>
             <li>
-              <NavLink to={`reviews`} state={{ from: location.state.from }}>
+              <NavLink
+                to={`reviews`}
+                state={{ from: location?.state?.from ?? "/" }}
+              >
                 Reviews
               </NavLink>
             </li>
