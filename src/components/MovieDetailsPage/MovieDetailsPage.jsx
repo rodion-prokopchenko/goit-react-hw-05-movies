@@ -1,8 +1,19 @@
 import react, { useEffect, useState, lazy, Suspense } from "react";
-import { useNavigate, useLocation, useParams, NavLink } from "react-router-dom";
+import {
+  useNavigate,
+  useLocation,
+  useParams,
+  NavLink,
+  Route,
+  Routes,
+  Outlet,
+} from "react-router-dom";
 import { fetchMovieDetails } from "../AppFetch/AppFetch";
 
 const MovieDetailsPage = () => {
+  const Cast = lazy(() => import("../Cast/Cast"));
+  const Reviews = lazy(() => import("../Reviews/Reviews"));
+
   const location = useLocation();
   const navigation = useNavigate();
   const { movieId } = useParams();
@@ -74,6 +85,12 @@ const MovieDetailsPage = () => {
           </ul>
         </div>
       </section>
+      {/* <Suspense fallback={<h2>...loading</h2>}>
+        <Routes>
+          <Route path="/movies/:movieId/cast" element={<Cast />}></Route>
+          <Route path="/movies/:movieId/reviews" element={<Reviews />}></Route>
+        </Routes>
+      </Suspense> */}
     </>
   );
 };
